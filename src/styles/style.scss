@@ -1,0 +1,52 @@
+.table-list.p-card .p-card-body  {
+  padding: 0.5rem 0;
+}
+
+.custom-file-input {
+  color: transparent;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input-2::before {
+  content: "Select image" !important;
+}
+.custom-file-text-select-identity::before {
+  content: "Upload identity card image" !important;
+}
+.custom-file-input::before {
+  content: "Select profile image";
+  color: white;
+  display: inline-block;
+  background: #6366f1;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 0.5rem 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.user-header {
+  .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+    background: #389623 !important;
+  }
+}
+
+
+@media screen and (max-width: 540px){
+  .p-menubar-end {
+    display: none;
+  }
+}
