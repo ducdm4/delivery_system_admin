@@ -1,23 +1,20 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import TableList from '../../../common/components/default/tableList';
+import TableList from '../../common/components/default/tableList';
 import { Card } from 'primereact/card';
-import {
-  KeyValue,
-  TableListRefObject,
-} from '../../../common/config/interfaces';
+import { KeyValue, TableListRefObject } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
 import {
   deleteCityThunk,
   getCityListFilter,
   cityLoading,
-} from '../../../features/city/citySlice';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import DialogConfirm from '../../../common/components/default/dialogConfirm';
+} from '../../features/city/citySlice';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import DialogConfirm from '../../common/components/default/dialogConfirm';
 import { toast } from 'react-toastify';
 import { Button } from 'primereact/button';
-import BasicListHeader from '../../../common/components/default/masterData/basicListHeader';
+import BasicListHeader from '../../common/components/default/masterData/basicListHeader';
 
 const CityList: NextPage = () => {
   const [tableConfig, setTableConfig] = useState({
@@ -51,7 +48,7 @@ const CityList: NextPage = () => {
   const router = useRouter();
 
   async function goToEdit(id: number) {
-    await router.push(`/admin/city/${id}`);
+    await router.push(`/city/${id}`);
   }
 
   async function getData(query = '') {
@@ -144,7 +141,7 @@ const CityList: NextPage = () => {
             smallTitle: 'See information about all city',
             addButton: {
               label: 'Add city',
-              url: '/admin/city/add',
+              url: '/city/add',
             },
           })}
           className="!border-none !rounded-none mx-auto my-5 table-list"

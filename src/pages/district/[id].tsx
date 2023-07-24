@@ -1,22 +1,22 @@
 import { NextPage } from 'next';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
   districtLoading,
   createNewDistrict,
   getDistrictInfo,
   editDistrictInfo,
-} from '../../../features/district/districtSlice';
-import { KeyValue } from '../../../common/config/interfaces';
+} from '../../features/district/districtSlice';
+import { KeyValue } from '../../common/config/interfaces';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
-import { getCityListFilter } from '../../../features/city/citySlice';
+import { getCityListFilter } from '../../features/city/citySlice';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Dropdown } from 'primereact/dropdown';
-import BasicEditHeader from '../../../common/components/default/masterData/basicEditHeader';
+import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
 
 interface CityItem {
   id: number;
@@ -59,7 +59,7 @@ const DetailDistrict: NextPage = () => {
               autoClose: 2000,
               type: 'success',
             });
-            await router.push('/admin/district');
+            await router.push('/district');
           }
         });
       } catch (e) {}
@@ -144,7 +144,7 @@ const DetailDistrict: NextPage = () => {
         }}
         handleSubmit={handleSubmit}
         resetInput={resetInput}
-        url={`/admin/district`}
+        url={`/district`}
       />
     );
   };

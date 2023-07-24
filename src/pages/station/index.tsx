@@ -1,26 +1,23 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import TableList from '../../../common/components/default/tableList';
+import TableList from '../../common/components/default/tableList';
 import { Card } from 'primereact/card';
-import {
-  KeyValue,
-  TableListRefObject,
-} from '../../../common/config/interfaces';
+import { KeyValue, TableListRefObject } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
 import {
   deleteStationThunk,
   getStationListFilter,
   stationLoading,
-} from '../../../features/station/stationSlice';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import DialogConfirm from '../../../common/components/default/dialogConfirm';
+} from '../../features/station/stationSlice';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import DialogConfirm from '../../common/components/default/dialogConfirm';
 import { toast } from 'react-toastify';
 import { Button } from 'primereact/button';
-import BasicListHeader from '../../../common/components/default/masterData/basicListHeader';
-import { STATION_TYPE } from '../../../common/config/constant';
-import { getCityListFilter } from '../../../features/city/citySlice';
-import { getDistrictListFilter } from '../../../features/district/districtSlice';
+import BasicListHeader from '../../common/components/default/masterData/basicListHeader';
+import { STATION_TYPE } from '../../common/config/constant';
+import { getCityListFilter } from '../../features/city/citySlice';
+import { getDistrictListFilter } from '../../features/district/districtSlice';
 
 const StationList: NextPage = () => {
   const [tableConfig, setTableConfig] = useState({
@@ -92,7 +89,7 @@ const StationList: NextPage = () => {
   }, []);
 
   async function goToEdit(id: number) {
-    await router.push(`/admin/station/${id}`);
+    await router.push(`/station/${id}`);
   }
 
   async function getData(query = '') {
@@ -193,7 +190,7 @@ const StationList: NextPage = () => {
             smallTitle: 'See information about all station',
             addButton: {
               label: 'Add station',
-              url: '/admin/station/add',
+              url: '/station/add',
             },
           })}
           className="!border-none !rounded-none mx-auto my-5 table-list"

@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import store from '../store';
 import Layout from '../common/components/default/layout';
 
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 

@@ -1,20 +1,20 @@
 import { NextPage } from 'next';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
   cityLoading,
   createNewCity,
   getCityInfo,
   editCityInfo,
-} from '../../../features/city/citySlice';
-import { KeyValue } from '../../../common/config/interfaces';
+} from '../../features/city/citySlice';
+import { KeyValue } from '../../common/config/interfaces';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import BasicEditHeader from '../../../common/components/default/masterData/basicEditHeader';
+import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
 
 const DetailCity: NextPage = () => {
   const [inputsInitialState, setInputsInitialState] = useState({
@@ -49,7 +49,7 @@ const DetailCity: NextPage = () => {
               autoClose: 2000,
               type: 'success',
             });
-            await router.push('/admin/city');
+            await router.push('/city');
           }
         });
       } catch (e) {}
@@ -92,7 +92,7 @@ const DetailCity: NextPage = () => {
   }, [router.query]);
 
   async function goToList() {
-    await router.push(`/admin/city`);
+    await router.push(`/city`);
   }
 
   const header = () => {
@@ -106,7 +106,7 @@ const DetailCity: NextPage = () => {
         }}
         handleSubmit={handleSubmit}
         resetInput={resetInput}
-        url={`/admin/city`}
+        url={`/city`}
       />
     );
   };

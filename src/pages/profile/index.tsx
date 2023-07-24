@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import UserInfo from '../../../common/components/profile/userInfo';
+import UserInfo from '../../common/components/profile/userInfo';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
@@ -9,19 +9,16 @@ import {
   updateSelfProfile,
   userLoading,
   userLoggedInDetail,
-} from '../../../features/user/userSlice';
+} from '../../features/user/userSlice';
 import { toast } from 'react-toastify';
-import PasswordInfo from '../../../common/components/profile/passwordInfo';
-import {
-  createNewPhoto,
-  getPhotoInfo,
-} from '../../../features/photo/photoSlice';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
+import PasswordInfo from '../../common/components/profile/passwordInfo';
+import { createNewPhoto, getPhotoInfo } from '../../features/photo/photoSlice';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import Head from 'next/head';
-import { KeyValue } from '../../../common/config/interfaces';
+import { KeyValue } from '../../common/config/interfaces';
 import { format } from 'date-fns';
 import { Card } from 'primereact/card';
-import { validateImageFile, prepareAddress } from '../../../common/functions';
+import { validateImageFile, prepareAddress } from '../../common/functions';
 
 const Profile: NextPage = () => {
   const [showPopupPassword, setShowPopupPassword] = useState(false);

@@ -5,17 +5,17 @@ import React, { ChangeEvent, useEffect, useReducer, useState } from 'react';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
   createNewStation,
   editStationInfo,
   getStationInfo,
   getStationListFilter,
   stationLoading,
-} from '../../../features/station/stationSlice';
-import AddressInfo from '../../../common/components/profile/addressInfo';
+} from '../../features/station/stationSlice';
+import AddressInfo from '../../common/components/profile/addressInfo';
 import { Divider } from 'primereact/divider';
-import { KeyValue } from '../../../common/config/interfaces';
+import { KeyValue } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
 import {
   handleChange,
@@ -24,16 +24,13 @@ import {
   setInputByValue,
   validateAddress,
   validateImageFile,
-} from '../../../common/functions';
-import StationBasicInfo from '../../../common/components/station/basicInfo';
-import StationImageList from '../../../common/components/station/imageList';
+} from '../../common/functions';
+import StationBasicInfo from '../../common/components/station/basicInfo';
+import StationImageList from '../../common/components/station/imageList';
 import { toast } from 'react-toastify';
-import {
-  createNewPhoto,
-  getPhotoInfo,
-} from '../../../features/photo/photoSlice';
-import { STATION_TYPE } from '../../../common/config/constant';
-import BasicEditHeader from '../../../common/components/default/masterData/basicEditHeader';
+import { createNewPhoto, getPhotoInfo } from '../../features/photo/photoSlice';
+import { STATION_TYPE } from '../../common/config/constant';
+import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
 
 const UpdateStation: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -216,7 +213,7 @@ const UpdateStation: NextPage = () => {
             autoClose: 2000,
             type: 'success',
           });
-          router.push('/admin/station');
+          router.push('/station');
         }
       });
     }
@@ -272,7 +269,7 @@ const UpdateStation: NextPage = () => {
         titleEdit={{ big: `Edit Station`, small: `Edit a station information` }}
         handleSubmit={handleSubmit}
         resetInput={resetInput}
-        url={`/admin/station`}
+        url={`/station`}
       />
     );
   };

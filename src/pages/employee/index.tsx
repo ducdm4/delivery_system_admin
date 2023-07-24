@@ -1,25 +1,22 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import TableList from '../../../common/components/default/tableList';
-import {
-  KeyValue,
-  TableListRefObject,
-} from '../../../common/config/interfaces';
+import TableList from '../../common/components/default/tableList';
+import { KeyValue, TableListRefObject } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import DialogConfirm from '../../../common/components/default/dialogConfirm';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import DialogConfirm from '../../common/components/default/dialogConfirm';
 import { toast } from 'react-toastify';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import BasicListHeader from '../../../common/components/default/masterData/basicListHeader';
+import BasicListHeader from '../../common/components/default/masterData/basicListHeader';
 import {
   deleteEmployeeThunk,
   employeeLoading,
   getListEmployeeFilter,
-} from '../../../features/employee/employeeSlice';
-import { getStationListFilter } from '../../../features/station/stationSlice';
-import { employeeRoleList } from '../../../common/config/constant';
+} from '../../features/employee/employeeSlice';
+import { getStationListFilter } from '../../features/station/stationSlice';
+import { employeeRoleList } from '../../common/config/constant';
 
 const EmployeeList: NextPage = () => {
   const [tableConfig, setTableConfig] = useState({
@@ -80,7 +77,7 @@ const EmployeeList: NextPage = () => {
   const router = useRouter();
 
   async function goToEdit(id: number) {
-    await router.push(`/admin/employee/${id}`);
+    await router.push(`/employee/${id}`);
   }
 
   async function getData(query = '') {
@@ -205,7 +202,7 @@ const EmployeeList: NextPage = () => {
             smallTitle: 'See information about all district',
             addButton: {
               label: 'Add employee',
-              url: '/admin/employee/add',
+              url: '/employee/add',
             },
           })}
           className="!border-none !rounded-none mx-auto my-5 table-list"

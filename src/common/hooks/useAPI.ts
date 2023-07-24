@@ -63,7 +63,7 @@ export async function useAPI(
 
 async function handleError(res: FailedResponse) {
   if (res.statusCode === 401 || res.statusCode === 403) {
-    await Router.push('/admin/login');
+    await Router.push('/login');
   } else {
     const message =
       typeof res.message === 'string' ? res.message : 'Something went wrong!';

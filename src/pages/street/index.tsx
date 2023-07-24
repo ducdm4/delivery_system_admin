@@ -1,28 +1,26 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import TableList from '../../../common/components/default/tableList';
-import {
-  KeyValue,
-  TableListRefObject,
-} from '../../../common/config/interfaces';
+import TableList from '../../common/components/default/tableList';
+import { KeyValue, TableListRefObject } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
 import {
-  deleteDistrictThunk,
-  getDistrictListFilter,
-  districtLoading,
-} from '../../../features/district/districtSlice';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import DialogConfirm from '../../../common/components/default/dialogConfirm';
+  deleteStreetThunk,
+  getStreetListFilter,
+  streetLoading,
+} from '../../features/street/streetSlice';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import DialogConfirm from '../../common/components/default/dialogConfirm';
 import { toast } from 'react-toastify';
-import { getCityListFilter } from '../../../features/city/citySlice';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import BasicListHeader from '../../../common/components/default/masterData/basicListHeader';
+import BasicListHeader from '../../common/components/default/masterData/basicListHeader';
+import { getDistrictListFilter } from '../../features/district/districtSlice';
+import { getWardListFilter } from '../../features/ward/wardSlice';
 
-const DistrictList: NextPage = () => {
+const WardList: NextPage = () => {
   const [tableConfig, setTableConfig] = useState({
-    url: '/district',
+    url: '/street',
     header: [
       {
         label: 'Name',
@@ -32,6 +30,16 @@ const DistrictList: NextPage = () => {
       {
         label: 'Search name',
         key: 'slug',
+      },
+      {
+        label: 'Ward',
+        key: 'ward',
+        isSort: true,
+      },
+      {
+        label: 'District',
+        key: 'district',
+        isSort: true,
       },
       {
         label: 'City',
@@ -45,28 +53,28 @@ const DistrictList: NextPage = () => {
     ],
     filters: [
       {
-        key: 'city',
-        label: 'City',
+        key: 'ward',
+        label: 'Ward',
         data: [],
       },
     ],
   });
   const [isShowDeleteDialog, setIsShowDeleteDialog] = useState(false);
-  const [currentDistrictDelete, setCurrentDistrictDelete] = useState({
+  const [currentStreetDelete, setCurrentStreetDelete] = useState({
     id: -1,
     name: '',
   });
-  const districtLoadingStatus = useAppSelector(districtLoading);
+  const streetLoadingStatus = useAppSelector(streetLoading);
   const tableListElement = useRef<TableListRefObject>(null);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   async function goToEdit(id: number) {
-    await router.push(`/admin/district/${id}`);
+    await router.push(`/street/${id}`);
   }
 
   async function getData(query = '') {
-    const res = await dispatch(getDistrictListFilter({ query })).unwrap();
+    const res = await dispatch(getStreetListFilter({ query })).unwrap();
     if (res.isSuccess) {
       return res.data;
     } else {
@@ -74,17 +82,17 @@ const DistrictList: NextPage = () => {
     }
   }
 
-  function confirmDeleteDistrict(id: number, name: string) {
-    setCurrentDistrictDelete({
+  function confirmDeleteStreet(id: number, name: string) {
+    setCurrentStreetDelete({
       id,
       name,
     });
     setIsShowDeleteDialog(true);
   }
 
-  function deleteDistrict() {
+  function deleteStreet() {
     const res = dispatch(
-      deleteDistrictThunk({ id: currentDistrictDelete.id }),
+      deleteStreetThunk({ id: currentStreetDelete.id }),
     ).unwrap();
     res.then((successData) => {
       if (successData.isSuccess) {
@@ -96,27 +104,39 @@ const DistrictList: NextPage = () => {
         if (tableListElement.current) {
           tableListElement.current.handleSearch();
         }
-        refusedDeleteDistrict();
+        refusedDeleteStreet();
       }
     });
   }
 
-  function refusedDeleteDistrict() {
+  function refusedDeleteStreet() {
     setIsShowDeleteDialog(false);
-    setCurrentDistrictDelete({
+    setCurrentStreetDelete({
       id: -1,
       name: '',
     });
   }
 
   useEffect(() => {
-    const getCity = dispatch(getCityListFilter({ query: '' })).unwrap();
-    getCity.then((listCityData) => {
+    const getWard = dispatch(getWardListFilter({ query: '' })).unwrap();
+    getWard.then((listWard) => {
       setTableConfig((old) => {
-        const indexCity = old.filters.findIndex((x) => x.key === 'city');
-        const newValue = old;
-        newValue.filters[indexCity].data = listCityData.data.list;
-        return newValue;
+        const indexWard = old.filters.findIndex((x) => x.key === 'ward');
+        const newVal = old;
+        newVal.filters[indexWard].data = listWard.data.list.map(
+          (ward: {
+            id: number;
+            name: string;
+            districtName: string;
+            cityName: string;
+          }) => {
+            return {
+              id: ward.id,
+              name: `${ward.name}, ${ward.districtName}, ${ward.cityName}`,
+            };
+          },
+        );
+        return newVal;
       });
     });
   }, []);
@@ -125,10 +145,12 @@ const DistrictList: NextPage = () => {
     const tdClasses = 'p-4 border-b border-blue-gray-50';
     return (
       <>
-        {data?.map((row, index: number) => (
+        {data.map((row, index: number) => (
           <tr key={index}>
             <td className={tdClasses}>{row.name}</td>
             <td className={tdClasses}>{row.slug}</td>
+            <td className={tdClasses}>{row.wardName}</td>
+            <td className={tdClasses}>{row.districtName}</td>
             <td className={tdClasses}>{row.cityName}</td>
             <td className={tdClasses}>
               <Button
@@ -141,7 +163,7 @@ const DistrictList: NextPage = () => {
               />
               <Button
                 icon="pi pi-trash"
-                onClick={() => confirmDeleteDistrict(row.id, row.name)}
+                onClick={() => confirmDeleteStreet(row.id, row.name)}
                 rounded
                 aria-label="Filter"
                 size="small"
@@ -158,16 +180,16 @@ const DistrictList: NextPage = () => {
   return (
     <>
       <Head>
-        <title>District management</title>
+        <title>Street management</title>
       </Head>
       <div>
         <Card
           header={BasicListHeader({
-            title: 'District list',
-            smallTitle: 'See information about all district',
+            title: 'Street list',
+            smallTitle: 'See information about all street',
             addButton: {
-              label: 'Add district',
-              url: '/admin/district/add',
+              label: 'Add street',
+              url: '/street/add',
             },
           })}
           className="!border-none !rounded-none mx-auto my-5 table-list"
@@ -177,20 +199,20 @@ const DistrictList: NextPage = () => {
             tableConfig={tableConfig}
             rowList={rowList}
             getData={getData}
-            loadingStatus={districtLoadingStatus}
+            loadingStatus={streetLoadingStatus}
           />
         </Card>
       </div>
 
       <DialogConfirm
         isShow={isShowDeleteDialog}
-        title={'Delete district'}
-        body={'Do you want to delete this District?'}
-        refusedCallback={refusedDeleteDistrict}
-        acceptedCallback={deleteDistrict}
+        title={'Delete ward'}
+        body={'Do you want to delete this Ward?'}
+        refusedCallback={refusedDeleteStreet}
+        acceptedCallback={deleteStreet}
       ></DialogConfirm>
     </>
   );
 };
 
-export default DistrictList;
+export default WardList;

@@ -12,9 +12,7 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <div id="banner-block">
-        <button>new order</button>
-        <input type="text" />
-        <button>track your order</button>
+        <p>admin dashboard</p>
       </div>
     </>
   );

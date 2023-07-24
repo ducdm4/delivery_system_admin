@@ -1,25 +1,22 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import TableList from '../../../common/components/default/tableList';
+import TableList from '../../common/components/default/tableList';
 import { Card } from 'primereact/card';
-import {
-  KeyValue,
-  TableListRefObject,
-} from '../../../common/config/interfaces';
+import { KeyValue, TableListRefObject } from '../../common/config/interfaces';
 import { useRouter } from 'next/router';
 import {
   deleteRouteThunk,
   getRouteListFilter,
   routeLoading,
-} from '../../../features/route/routeSlice';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import DialogConfirm from '../../../common/components/default/dialogConfirm';
+} from '../../features/route/routeSlice';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import DialogConfirm from '../../common/components/default/dialogConfirm';
 import { toast } from 'react-toastify';
 import { Button } from 'primereact/button';
-import BasicListHeader from '../../../common/components/default/masterData/basicListHeader';
-import { routeTypeList } from '../../../common/config/constant';
-import { getStationListFilter } from '../../../features/station/stationSlice';
+import BasicListHeader from '../../common/components/default/masterData/basicListHeader';
+import { routeTypeList } from '../../common/config/constant';
+import { getStationListFilter } from '../../features/station/stationSlice';
 
 const RouteList: NextPage = () => {
   const [tableConfig, setTableConfig] = useState({
@@ -91,7 +88,7 @@ const RouteList: NextPage = () => {
   }, []);
 
   async function goToEdit(id: number) {
-    await router.push(`/admin/route/${id}`);
+    await router.push(`/route/${id}`);
   }
 
   async function getData(query = '') {
@@ -197,7 +194,7 @@ const RouteList: NextPage = () => {
             smallTitle: 'See information about all route',
             addButton: {
               label: 'Add route',
-              url: '/admin/route/add',
+              url: '/route/add',
             },
           })}
           className="!border-none !rounded-none mx-auto my-5 table-list"

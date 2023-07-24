@@ -1,13 +1,13 @@
 import type { NextPage } from 'next';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAppDispatch } from '../../../common/hooks';
-import { userLogin } from '../../../features/auth/authSlice';
+import { useAppDispatch } from '../../common/hooks';
+import { userLogin } from '../../features/auth/authSlice';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { ValidateEmail } from '../../../common/functions';
+import { ValidateEmail } from '../../common/functions';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { getUserProfilePicture } from '../../../features/photo/photoSlice';
+import { getUserProfilePicture } from '../../features/photo/photoSlice';
 
 const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ const LoginPage: NextPage = () => {
               }),
             ).unwrap();
           }
-          await router.push('/admin');
+          await router.push('/');
         }
       } catch (e) {}
     }

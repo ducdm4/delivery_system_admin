@@ -1,34 +1,34 @@
 import { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { KeyValue } from '../../../common/config/interfaces';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { KeyValue } from '../../common/config/interfaces';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Dropdown } from 'primereact/dropdown';
-import BasicEditHeader from '../../../common/components/default/masterData/basicEditHeader';
+import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
 import {
   getChildStation,
   getStationListFilter,
-} from '../../../features/station/stationSlice';
-import { getListEmployeeFilter } from '../../../features/employee/employeeSlice';
+} from '../../features/station/stationSlice';
+import { getListEmployeeFilter } from '../../features/employee/employeeSlice';
 import {
   setInputByValue,
   validateArrayRequired,
   validateRequired,
-} from '../../../common/functions';
+} from '../../common/functions';
 import {
   createNewRoute,
   editRouteInfo,
   getRouteInfo,
   routeLoading,
-} from '../../../features/route/routeSlice';
+} from '../../features/route/routeSlice';
 import { SelectButton } from 'primereact/selectbutton';
 import { MultiSelect } from 'primereact/multiselect';
-import { getStreetNotInRoute } from '../../../features/street/streetSlice';
+import { getStreetNotInRoute } from '../../features/street/streetSlice';
 import { Checkbox } from 'primereact/checkbox';
 
 const DetailRoute: NextPage = () => {
@@ -81,7 +81,7 @@ const DetailRoute: NextPage = () => {
               type: 'success',
             },
           );
-          router.push('/admin/route');
+          router.push('/route');
         }
       });
     }
@@ -288,7 +288,7 @@ const DetailRoute: NextPage = () => {
         }}
         handleSubmit={handleSubmit}
         resetInput={resetInput}
-        url={`/admin/route`}
+        url={`/route`}
       />
     );
   };

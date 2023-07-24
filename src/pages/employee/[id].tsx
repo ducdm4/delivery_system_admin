@@ -1,33 +1,30 @@
 import { NextPage } from 'next';
-import UserInfo from '../../../common/components/profile/userInfo';
-import EmployeeInfo from '../../../common/components/employee/employeeInfo';
+import UserInfo from '../../common/components/profile/userInfo';
+import EmployeeInfo from '../../common/components/employee/employeeInfo';
 import { TabMenu } from 'primereact/tabmenu';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { KeyValue } from '../../../common/config/interfaces';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { KeyValue } from '../../common/config/interfaces';
 import Head from 'next/head';
 import { Card } from 'primereact/card';
-import { getStationListFilter } from '../../../features/station/stationSlice';
+import { getStationListFilter } from '../../features/station/stationSlice';
 import {
   prepareAddress,
   validateEmailText,
   validateImageFile,
   validateRequired,
-} from '../../../common/functions';
+} from '../../common/functions';
 import { useRouter } from 'next/router';
-import BasicEditHeader from '../../../common/components/default/masterData/basicEditHeader';
-import {
-  createNewPhoto,
-  getPhotoInfo,
-} from '../../../features/photo/photoSlice';
+import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
+import { createNewPhoto, getPhotoInfo } from '../../features/photo/photoSlice';
 import {
   createNewEmployee,
   employeeLoading,
   getEmployeeInfo,
   updateEmployeeInfo,
-} from '../../../features/employee/employeeSlice';
+} from '../../features/employee/employeeSlice';
 import { toast } from 'react-toastify';
-import { employeeRoleList } from '../../../common/config/constant';
+import { employeeRoleList } from '../../common/config/constant';
 import { format } from 'date-fns';
 
 const DetailEmployee: NextPage = () => {
@@ -226,7 +223,7 @@ const DetailEmployee: NextPage = () => {
             autoClose: 2000,
             type: 'success',
           });
-          await router.push('/admin/employee');
+          await router.push('/employee');
         }
       });
     }
@@ -326,7 +323,7 @@ const DetailEmployee: NextPage = () => {
           titleEdit={{ big: `Edit Employee`, small: `Edit a new Employee` }}
           handleSubmit={handleSubmit}
           resetInput={resetInput}
-          url={'/admin/employee'}
+          url={'/employee'}
           loading={employeeLoadingStatus}
         />
         <TabMenu

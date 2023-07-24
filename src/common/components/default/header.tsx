@@ -24,25 +24,25 @@ export default function Header() {
         {
           label: 'City',
           command: () => {
-            router.push('/admin/city');
+            router.push('/city');
           },
         },
         {
           label: 'District',
           command: () => {
-            router.push('/admin/district');
+            router.push('/district');
           },
         },
         {
           label: 'Ward',
           command: () => {
-            router.push('/admin/ward');
+            router.push('/ward');
           },
         },
         {
           label: 'Street',
           command: () => {
-            router.push('/admin/street');
+            router.push('/street');
           },
         },
         {
@@ -51,7 +51,7 @@ export default function Header() {
         {
           label: 'Route config',
           command: () => {
-            router.push('/admin/route');
+            router.push('/route');
           },
         },
         {
@@ -75,14 +75,14 @@ export default function Header() {
           label: 'Employee',
           icon: 'pi pi-fw pi-user',
           command: () => {
-            router.push('/admin/employee');
+            router.push('/employee');
           },
         },
         {
           label: 'Station',
           icon: 'pi pi-fw pi-building',
           command: () => {
-            router.push('/admin/station');
+            router.push('/station');
           },
         },
       ],
@@ -94,7 +94,7 @@ export default function Header() {
         {
           label: 'Profile',
           command: () => {
-            router.push('/admin/profile');
+            router.push('/profile');
           },
         },
         {
@@ -109,7 +109,7 @@ export default function Header() {
 
   function doLogout() {
     dispatch(logout());
-    router.push('/admin/login');
+    router.push('/login');
   }
 
   const start = (
