@@ -113,7 +113,12 @@ export default function Header() {
   }
 
   const start = (
-    <p className={'font-bold text-xl text-gray-700 pr-5'}>Delivery System</p>
+    <p
+      className={'font-bold text-xl text-gray-700 pr-5 cursor-pointer'}
+      onClick={() => router.push('/')}
+    >
+      Delivery System
+    </p>
   );
 
   const end = (
