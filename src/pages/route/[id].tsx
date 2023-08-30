@@ -308,7 +308,7 @@ const DetailRoute: NextPage = () => {
         >
           <div>
             <div className={'flex-row flex gap-8'}>
-              <div className={'basis-1/3'}>
+              <div className={'basis-1/4'}>
                 <span className="p-float-label">
                   <Dropdown
                     value={inputs.station}
@@ -331,7 +331,7 @@ const DetailRoute: NextPage = () => {
                   {inputsError.station}
                 </p>
               </div>
-              <div className={'basis-1/3'}>
+              <div className={'basis-1/4'}>
                 <span className="p-float-label">
                   <Dropdown
                     value={inputs.employee}
@@ -354,17 +354,34 @@ const DetailRoute: NextPage = () => {
                   {inputsError.employee}
                 </p>
               </div>
-              <div className={'basis-1/3'}>
+              <div className={'basis-2/4 flex items-center'}>
                 <SelectButton
                   value={inputs.type}
                   onChange={(e) => setInputByValue('type', e.value, setInputs)}
-                  className={'w-full'}
+                  className={''}
                   options={typeOption}
                   optionLabel="name"
                   pt={{
                     button: { className: '!p-[0.55rem]' },
                   }}
                 />
+                {isShowChildStationAndParent().parent && (
+                  <>
+                    <Checkbox
+                      inputId="isGoToParent"
+                      name="isGoToParent"
+                      disabled={inputs.type === 1}
+                      onChange={(e) =>
+                        setInputByValue('isGoToParent', e.checked, setInputs)
+                      }
+                      checked={inputs.isGoToParent}
+                      className={'ml-10'}
+                    />
+                    <label htmlFor="isGoToParent" className="ml-2">
+                      Go to parent station
+                    </label>
+                  </>
+                )}
               </div>
             </div>
             <div className={'flex-row flex gap-8 mt-8'}>
@@ -391,23 +408,6 @@ const DetailRoute: NextPage = () => {
                   {inputsError.streets}
                 </p>
               </div>
-              {isShowChildStationAndParent().parent && (
-                <div className={'basis-1/3 flex items-center'}>
-                  <Checkbox
-                    inputId="isGoToParent"
-                    name="pizza"
-                    disabled={inputs.type === 1}
-                    value="Onion"
-                    onChange={(e) =>
-                      setInputByValue('isGoToParent', e.checked, setInputs)
-                    }
-                    checked={inputs.isGoToParent}
-                  />
-                  <label htmlFor="isGoToParent" className="ml-2">
-                    Go to parent station
-                  </label>
-                </div>
-              )}
             </div>
             {isShowChildStationAndParent().child && (
               <div className={'flex-row flex gap-8 mt-8'}>
