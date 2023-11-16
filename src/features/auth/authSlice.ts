@@ -96,7 +96,7 @@ export const authSlice = createSlice({
         state.status = 'idle';
         const response = action.payload;
         if (response.isSuccess) {
-          state.user = response.data['user'];
+          state.user = response.data;
         }
       });
 

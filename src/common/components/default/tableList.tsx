@@ -203,7 +203,7 @@ const TableList = forwardRef(
           handleChangeFilter={handleChangeFilter}
           loadingStatus={loadingStatus}
         />
-        <div className="overflow-scroll p-0 relative min-h-0">
+        <div className="p-0 relative min-h-0">
           {loadingStatus === 'loading' && (
             <ProgressSpinner
               style={{ width: '22px', height: '22px' }}

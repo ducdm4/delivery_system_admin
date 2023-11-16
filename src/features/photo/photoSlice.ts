@@ -60,8 +60,10 @@ export const PhotoSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(getUserProfilePicture.fulfilled, (state, action) => {
-        state.userProfile = URL.createObjectURL(action.payload.data);
-        state.status = 'idle';
+        if (action.payload.isSuccess) {
+          state.userProfile = URL.createObjectURL(action.payload.data);
+          state.status = 'idle';
+        }
       });
   },
 });

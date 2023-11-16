@@ -9,6 +9,7 @@ import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { useDispatch } from 'react-redux';
+import { ROLE_LIST } from '../../config/constant';
 
 export default function Header() {
   const router = useRouter();
@@ -107,6 +108,60 @@ export default function Header() {
     },
   ];
 
+  const itemsOperator = [
+    {
+      label: 'Master Data',
+      icon: 'pi pi-fw pi-file',
+      items: [
+        {
+          label: 'Route config',
+          command: () => {
+            router.push('/route');
+          },
+        },
+      ],
+    },
+    {
+      label: 'Business',
+      icon: 'pi pi-fw pi-truck',
+      items: [
+        {
+          label: 'Order',
+          icon: 'pi pi-fw pi-file',
+        },
+        {
+          label: 'Customer',
+          icon: 'pi pi-fw pi-users',
+        },
+        {
+          label: 'Employee',
+          icon: 'pi pi-fw pi-user',
+          command: () => {
+            router.push('/employee');
+          },
+        },
+      ],
+    },
+    {
+      label: `${userInfo.firstName} ${userInfo.lastName}`,
+      icon: 'pi pi-fw pi-user',
+      items: [
+        {
+          label: 'Profile',
+          command: () => {
+            router.push('/profile');
+          },
+        },
+        {
+          label: 'Logout',
+          command: () => {
+            doLogout();
+          },
+        },
+      ],
+    },
+  ];
+
   function doLogout() {
     dispatch(logout());
     router.push('/login');
@@ -130,17 +185,20 @@ export default function Header() {
         <Badge value="2"></Badge>
       </i>
       <Avatar className={'lg:!w-[3.5rem] lg:!h-[3.5rem]'} shape="circle">
-        <img className={'object-cover'} src={userProfileImage} />
+        {userProfileImage && (
+          <img className={'object-cover'} src={userProfileImage} />
+        )}
+        {!userProfileImage && <i className="fa-solid fa-user text-xl"></i>}
       </Avatar>
     </div>
   );
 
   return (
     <Menubar
-      className={
-        '!bg-[#FDE612FF] fixed lg:w-full left-0 !px-[calc((100vw-1400px)/2)] z-10 justify-between !rounded-none !border-none'
-      }
-      model={items}
+      className={`${
+        userInfo.role === ROLE_LIST.ADMIN ? '!bg-[#FDE612FF]' : '!bg-[#4fda00]'
+      } fixed lg:w-full left-0 !px-[calc((100vw-1400px)/2)] z-10 justify-between !rounded-none !border-none`}
+      model={userInfo.role === ROLE_LIST.ADMIN ? items : itemsOperator}
       start={start}
       end={end}
     />

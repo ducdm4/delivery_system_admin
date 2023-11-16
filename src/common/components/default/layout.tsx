@@ -33,7 +33,7 @@ export default function Layout({ children }: PropsWithChildren) {
           verify.then((res) => {
             if (res.isSuccess) {
               setIsVerified(true);
-              if (res.data.user.profilePicture) {
+              if (res.data.profilePicture) {
                 const getUserProfileImage = dispatch(
                   getUserProfilePicture({
                     id: res.data.user.profilePicture.id,

@@ -5,17 +5,13 @@ import Counter from '../features/counter/Counter';
 import { useAppSelector } from '../common/hooks';
 import { userLoggedIn } from '../features/auth/authSlice';
 import { useEffect } from 'react';
+import OperatorDashboard from '../common/components/home/operatorDashboard';
+import { ROLE_LIST } from '../common/config/constant';
 
 const IndexPage: NextPage = () => {
   const userInfo = useAppSelector(userLoggedIn);
 
-  return (
-    <>
-      <div id="banner-block">
-        <p>admin dashboard</p>
-      </div>
-    </>
-  );
+  return <>{userInfo.role === ROLE_LIST.OPERATOR && <OperatorDashboard />}</>;
 };
 
 export default IndexPage;

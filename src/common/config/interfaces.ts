@@ -1,7 +1,6 @@
 export interface LoginData {
   email: string;
   password: string;
-  role: number;
 }
 
 export interface APIInfo {

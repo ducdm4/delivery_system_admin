@@ -30,9 +30,7 @@ const LoginPage: NextPage = () => {
     event.preventDefault();
     if (validate()) {
       try {
-        const result = await dispatch(
-          userLogin({ ...inputs, role: 1 }),
-        ).unwrap();
+        const result = await dispatch(userLogin(inputs)).unwrap();
         if (result.isSuccess) {
           if (result.data.user.profilePicture) {
             await dispatch(
