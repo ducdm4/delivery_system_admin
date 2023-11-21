@@ -78,7 +78,7 @@ export const userSlice = createSlice({
       .addCase(updateSelfProfile.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updateSelfProfile.fulfilled, (state, action) => {
+      .addCase(updateSelfProfile.fulfilled, (state) => {
         state.status = 'idle';
       });
 
@@ -86,7 +86,7 @@ export const userSlice = createSlice({
       .addCase(updatePassword.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updatePassword.fulfilled, (state, action) => {
+      .addCase(updatePassword.fulfilled, (state) => {
         state.status = 'idle';
       });
   },

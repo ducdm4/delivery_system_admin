@@ -69,7 +69,7 @@ export const StreetSlice = createSlice({
       .addCase(createNewStreet.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createNewStreet.fulfilled, (state, action) => {
+      .addCase(createNewStreet.fulfilled, (state) => {
         state.status = 'idle';
       });
 
@@ -77,7 +77,7 @@ export const StreetSlice = createSlice({
       .addCase(getStreetInfo.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getStreetInfo.fulfilled, (state, action) => {
+      .addCase(getStreetInfo.fulfilled, (state) => {
         state.status = 'idle';
       });
 
@@ -85,7 +85,7 @@ export const StreetSlice = createSlice({
       .addCase(getStreetListFilter.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getStreetListFilter.fulfilled, (state, action) => {
+      .addCase(getStreetListFilter.fulfilled, (state) => {
         state.status = 'idle';
       });
 
@@ -93,7 +93,7 @@ export const StreetSlice = createSlice({
       .addCase(getStreetNotInRoute.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getStreetNotInRoute.fulfilled, (state, action) => {
+      .addCase(getStreetNotInRoute.fulfilled, (state) => {
         state.status = 'idle';
       });
   },

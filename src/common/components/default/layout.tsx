@@ -36,7 +36,7 @@ export default function Layout({ children }: PropsWithChildren) {
               if (res.data.profilePicture) {
                 const getUserProfileImage = dispatch(
                   getUserProfilePicture({
-                    id: res.data.user.profilePicture.id,
+                    id: res.data.profilePicture.id,
                   }),
                 ).unwrap();
                 getUserProfileImage.then();

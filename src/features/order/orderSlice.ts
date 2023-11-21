@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { KeyValue } from '../../common/config/interfaces';
 import { AppState } from '../../store';
-import { getNewOrderByStatusAPI } from './orderAPI';
+import {
+  cancelOrderOperatorAPI,
+  getNewOrderByStatusAPI,
+  confirmOrderOperatorAPI,
+} from './orderAPI';
 
 export interface OrderState {
   status: 'idle' | 'loading' | 'failed';
@@ -11,7 +15,6 @@ const initialState: OrderState = {
   status: 'idle',
 };
 
-
 export const getOrderByStatus = createAsyncThunk(
   'order/getOrderByStatus',
   async (data: KeyValue) => {
@@ -19,12 +22,50 @@ export const getOrderByStatus = createAsyncThunk(
   },
 );
 
+export const cancelOrderOperator = createAsyncThunk(
+  'order/cancelOrderOperator',
+  async (data: KeyValue) => {
+    return await cancelOrderOperatorAPI(data);
+  },
+);
+
+export const confirmOrderOperator = createAsyncThunk(
+  'order/confirmOrderOperator',
+  async (data: KeyValue) => {
+    return await confirmOrderOperatorAPI(data);
+  },
+);
+
 export const OrderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {}})
+  extraReducers: (builder) => {
+    builder
+      .addCase(getOrderByStatus.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getOrderByStatus.fulfilled, (state) => {
+        state.status = 'idle';
+      });
 
+    builder
+      .addCase(cancelOrderOperator.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(cancelOrderOperator.fulfilled, (state) => {
+        state.status = 'idle';
+      });
+
+    builder
+      .addCase(confirmOrderOperator.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(confirmOrderOperator.fulfilled, (state) => {
+        state.status = 'idle';
+      });
+  },
+});
 
 export const {} = OrderSlice.actions;
 
