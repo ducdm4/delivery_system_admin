@@ -19,8 +19,8 @@ interface keyStringValue {
 interface Props {
   inputs: keyStringValue;
   errors?: keyStringValue;
-  handleChangeAddressProp: Function;
-  handleChange: Function;
+  handleChangeAddressProp: any;
+  handleChange: any;
 }
 
 interface CityDistrictWardItem {

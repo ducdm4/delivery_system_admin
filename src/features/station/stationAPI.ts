@@ -74,3 +74,14 @@ export const deleteStationById = async (data: KeyValue) => {
   );
   return response;
 };
+
+export const getStationWithSameTypeAPI = async (data: KeyValue) => {
+  const response = await useAPI(
+    {
+      url: `stations/sameLevel/${data.type}`,
+      method: 'GET',
+    },
+    true,
+  );
+  return response;
+};

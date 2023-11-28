@@ -6,6 +6,7 @@ import {
   editStationById,
   deleteStationById,
   getChildStationAPI,
+  getStationWithSameTypeAPI,
 } from './stationAPI';
 import { KeyValue } from '../../common/config/interfaces';
 import { AppState } from '../../store';
@@ -60,6 +61,13 @@ export const deleteStationThunk = createAsyncThunk(
   },
 );
 
+export const getStationWithSameType = createAsyncThunk(
+  'station/getStationWithSameType',
+  async (data: KeyValue) => {
+    return await getStationWithSameTypeAPI(data);
+  },
+);
+
 export const StationSlice = createSlice({
   name: 'station',
   initialState,
@@ -94,6 +102,14 @@ export const StationSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(getChildStation.fulfilled, (state, action) => {
+        state.status = 'idle';
+      });
+
+    builder
+      .addCase(getStationWithSameType.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getStationWithSameType.fulfilled, (state, action) => {
         state.status = 'idle';
       });
   },

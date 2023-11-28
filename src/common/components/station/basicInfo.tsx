@@ -12,15 +12,17 @@ import { getWardNotUnderManage } from '../../../features/ward/wardSlice';
 interface Props {
   inputs: KeyValue;
   errors: KeyValue;
-  handleChange: Function;
-  setInput: Function;
+  handleChange: any;
+  setInput: any;
   stationList: Array<KeyValue>;
+  stationSameTypeList: Array<KeyValue>;
 }
 
 function StationBasicInfo({
   inputs,
   handleChange,
   stationList,
+  stationSameTypeList,
   setInput,
   errors,
 }: Props) {
@@ -87,6 +89,23 @@ function StationBasicInfo({
         });
     }
     return [];
+  };
+
+  const stationSameTypeListReduced = () => {
+    return stationSameTypeList
+      ?.map((item) => {
+        return {
+          id: item.id,
+          name: item.name,
+          type: item.type,
+        };
+      })
+      .filter((item) => {
+        if (router.query.id !== 'add') {
+          return item.id !== inputs.id;
+        }
+        return true;
+      });
   };
 
   function didChangeType(val: Array<KeyValue>) {
@@ -172,6 +191,23 @@ function StationBasicInfo({
             text: { className: '!text-sm' },
           }}
         />
+      </div>
+      <div className={'flex-row flex gap-8 mt-8 mb-4'}>
+        <div className={'w-full'}>
+          <span className="p-float-label">
+            <MultiSelect
+              value={inputs.stationConnected}
+              onChange={(e) => setInput('stationConnected', e.value)}
+              options={stationSameTypeListReduced()}
+              optionLabel="name"
+              filter
+              placeholder="Select connected station"
+              maxSelectedLabels={10}
+              className="w-full md:w-20rem"
+            />
+            <label htmlFor="ward">Connected station</label>
+          </span>
+        </div>
       </div>
     </>
   );

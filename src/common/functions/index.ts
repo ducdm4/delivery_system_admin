@@ -14,7 +14,7 @@ export const handleChangeAddressProp = (
   val: { id: number; name: string },
   key: string,
   inputs: KeyValue,
-  setInputs: Function,
+  setInputs: any,
 ) => {
   let addressNew = inputs.address;
   const addressToAdd: KeyValue = {};
@@ -38,7 +38,7 @@ export const handleChangeAddressProp = (
 export function handleChange(
   e: ChangeEvent<HTMLInputElement>,
   inputs: KeyValue,
-  setInputs: Function,
+  setInputs: any,
 ) {
   const name = e.target.name;
   const value = e.target.value;
@@ -54,7 +54,7 @@ export function handleChange(
   }
 }
 
-export function setInputByValue(key: string, val: any, setInputs: Function) {
+export function setInputByValue(key: string, val: any, setInputs: any) {
   setInputs((values: KeyValue) => {
     return { ...values, [key]: val };
   });
@@ -111,7 +111,7 @@ export function validateAddress(address: KeyValue) {
 
 export function processSelectedImage(
   e: ChangeEvent<HTMLInputElement>,
-  callback: Function,
+  callback: any,
 ) {
   if (e.target.files && e.target.files.length) {
     const file = e.target.files[0];

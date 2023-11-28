@@ -13,7 +13,7 @@ interface keyStringValue {
 
 interface Props {
   showPopupPassword: boolean;
-  setShowPopupPassword: Function;
+  setShowPopupPassword: any;
 }
 
 const PasswordInfo = ({ showPopupPassword, setShowPopupPassword }: Props) => {

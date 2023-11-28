@@ -11,6 +11,7 @@ import {
   editStationInfo,
   getStationInfo,
   getStationListFilter,
+  getStationWithSameType,
   stationLoading,
 } from '../../features/station/stationSlice';
 import AddressInfo from '../../common/components/profile/addressInfo';
@@ -51,12 +52,14 @@ const UpdateStation: NextPage = () => {
       city: keyStringAnyObj,
     },
     parentStation: keyStringAnyObj,
+    stationConnected: [],
     wards: [],
     imageFileSelected: [],
   };
 
   const [inputs, setInputs] = useState(Object.assign({}, initInput));
   const [stationList, setStationList] = useState([]);
+  const [stationSameTypeList, setStationSameTypeList] = useState([]);
   const [errors, setErrors] = useState({
     name: '',
     address: {
@@ -137,6 +140,15 @@ const UpdateStation: NextPage = () => {
                   };
                 },
               );
+              stationInfo.stationConnected = stationInfo.stationConnected.map(
+                (sta: KeyValue) => {
+                  return {
+                    id: sta.id,
+                    name: sta.name,
+                    type: sta.type,
+                  };
+                },
+              );
               if (stationInfo.photos.length) {
                 const promisePhoto: Array<Promise<KeyValue>> = [];
                 stationInfo.photos.forEach((photo: { id: number }) => {
@@ -168,6 +180,17 @@ const UpdateStation: NextPage = () => {
       });
     });
   }, [router.query]);
+
+  useEffect(() => {
+    getSameTypeStation(inputs.type.id).then();
+  }, [inputs.type.id]);
+
+  async function getSameTypeStation(type: number) {
+    const res = await dispatch(getStationWithSameType({ type })).unwrap();
+    if (res.isSuccess) {
+      setStationSameTypeList(res.data);
+    }
+  }
 
   async function handleSubmit() {
     if (validate()) {
@@ -295,6 +318,7 @@ const UpdateStation: NextPage = () => {
           handleChange={handleInputChanged}
           inputs={inputs}
           stationList={stationList}
+          stationSameTypeList={stationSameTypeList}
           setInput={setInput}
           errors={errors}
         />
