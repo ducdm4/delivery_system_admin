@@ -12,6 +12,7 @@ import { Dropdown } from 'primereact/dropdown';
 import BasicEditHeader from '../../common/components/default/masterData/basicEditHeader';
 import {
   getChildStation,
+  getConnectedStation,
   getStationListFilter,
 } from '../../features/station/stationSlice';
 import { getListEmployeeFilter } from '../../features/employee/employeeSlice';
@@ -38,6 +39,7 @@ const DetailRoute: NextPage = () => {
     type: 0,
     streets: [],
     childStation: [],
+    connectedStation: [],
     isGoToParent: null,
   };
   const [inputsInitialState, setInputsInitialState] = useState(initState);
@@ -61,6 +63,9 @@ const DetailRoute: NextPage = () => {
   ];
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [childStationList, setChildStationList] = useState(arrayKeyValue);
+  const [connectedStationList, setConnectedStationList] =
+    useState(arrayKeyValue);
+
   function handleSubmit() {
     if (validate()) {
       let result: Promise<KeyValue>;
@@ -152,6 +157,14 @@ const DetailRoute: NextPage = () => {
                     name: item.name,
                   };
                 }),
+                connectedStation: data.connectedStation.map(
+                  (item: KeyValue) => {
+                    return {
+                      id: item.id,
+                      name: item.name,
+                    };
+                  },
+                ),
               };
               await getEmployeeList(data.station.id, data.type);
               getStreetList(data.station.id, data.type).then((res) => {
@@ -161,6 +174,10 @@ const DetailRoute: NextPage = () => {
               getChildStationList(data.station.id).then((res) => {
                 const stationList = [...res, ...returnData.childStation];
                 setChildStationList(stationList);
+              });
+              getConnectedStationList(data.station.id).then((res) => {
+                const stationList = [...res];
+                setConnectedStationList(stationList);
               });
               setInputs(returnData);
             }
@@ -228,9 +245,25 @@ const DetailRoute: NextPage = () => {
     }
   }
 
+  async function getConnectedStationList(station: number) {
+    const connectedStation = await dispatch(
+      getConnectedStation({ id: station }),
+    ).unwrap();
+    if (connectedStation.isSuccess) {
+      const data = connectedStation.data.stations.map((item: KeyValue) => {
+        return {
+          id: item.id,
+          name: item.name,
+        };
+      });
+      setConnectedStationList(data);
+      return data;
+    }
+  }
+
   useEffect(() => {
     if (inputs.station.id) {
-      if (!isFirstLoad) {
+      if (!isFirstLoad || (isFirstLoad && router.query.id === 'add')) {
         setInputByValue('employee', {}, setInputs);
         setInputByValue('streets', [], setInputs);
         setInputByValue('isGoToParent', null, setInputs);
@@ -239,6 +272,7 @@ const DetailRoute: NextPage = () => {
         setInputByValue('childStation', [], setInputs);
         if (inputs.type === 0) {
           getChildStationList(inputs.station.id).then();
+          getConnectedStationList(inputs.station.id).then();
         }
       } else {
         setIsFirstLoad(false);
@@ -270,6 +304,15 @@ const DetailRoute: NextPage = () => {
 
   const childStationListFiltered = () => {
     return childStationList.map((item: KeyValue) => {
+      return {
+        id: item.id,
+        name: item.name,
+      };
+    });
+  };
+
+  const connectedStationListFiltered = () => {
+    return connectedStationList.map((item: KeyValue) => {
       return {
         id: item.id,
         name: item.name,
@@ -409,6 +452,30 @@ const DetailRoute: NextPage = () => {
                 </p>
               </div>
             </div>
+            {inputs.type === 0 && (
+              <div className={'flex-row flex gap-8 mt-8'}>
+                <div className={'basis-2/3'}>
+                  <span className="p-float-label">
+                    <MultiSelect
+                      value={inputs.connectedStation}
+                      onChange={(e) =>
+                        setInputByValue('connectedStation', e.value, setInputs)
+                      }
+                      options={connectedStationListFiltered()}
+                      optionLabel="name"
+                      filter
+                      placeholder="Select connected station"
+                      maxSelectedLabels={10}
+                      className={
+                        (inputsError.employee !== '' ? 'p-invalid' : '') +
+                        ' w-full p-inputtext-sm md:w-20rem'
+                      }
+                    />
+                    <label htmlFor="ward">Connected station</label>
+                  </span>
+                </div>
+              </div>
+            )}
             {isShowChildStationAndParent().child && (
               <div className={'flex-row flex gap-8 mt-8'}>
                 <div className={'basis-2/3'}>

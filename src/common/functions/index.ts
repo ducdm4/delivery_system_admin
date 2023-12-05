@@ -152,3 +152,11 @@ export function validateEmailText(input: string) {
   }
   return message;
 }
+
+export function getFullAddressText(address: KeyValue) {
+  if (address) {
+    return `${address.building} ${address.detail} ${address.street.name}, 
+    ${address.ward.name}, ${address.district.name}, ${address.city.name}`;
+  }
+  return '';
+}

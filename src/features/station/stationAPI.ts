@@ -38,6 +38,17 @@ export const getChildStationAPI = async (data: KeyValue) => {
   return response;
 };
 
+export const getConnectedStationAPI = async (data: KeyValue) => {
+  const response = await useAPI(
+    {
+      url: `stations/stationConnected/${data.id}`,
+      method: 'GET',
+    },
+    true,
+  );
+  return response;
+};
+
 export const editStationById = async (data: KeyValue) => {
   const response = await useAPI(
     {

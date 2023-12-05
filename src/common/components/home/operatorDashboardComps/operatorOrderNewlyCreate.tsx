@@ -1,4 +1,4 @@
-import { KeyValue } from '../../config/interfaces';
+import { KeyValue } from '../../../config/interfaces';
 import { Divider } from 'primereact/divider';
 import { Image } from 'primereact/image';
 import { Dialog } from 'primereact/dialog';
@@ -7,17 +7,18 @@ import { Dropdown } from 'primereact/dropdown';
 import { toast } from 'react-toastify';
 import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch } from '../../../hooks';
 import {
   cancelOrderOperator,
   confirmOrderOperator,
   getOrderByStatus,
-} from '../../../features/order/orderSlice';
-import { ORDER_STATUS, parcelWeightList } from '../../config/constant';
+} from '../../../../features/order/orderSlice';
+import { ORDER_STATUS, parcelWeightList } from '../../../config/constant';
 import moment from 'moment';
-import { getPhotoInfo } from '../../../features/photo/photoSlice';
+import { getPhotoInfo } from '../../../../features/photo/photoSlice';
+import { getFullAddressText } from '../../../functions';
 
-const OperatorOrderOnTheWay = () => {
+const OperatorOrderNewlyCreate = () => {
   const [isShowCancelDialog, setIsShowCancelDialog] = useState(false);
   const [orderCancelInfo, setOrderCancelInfo] = useState({} as KeyValue);
   const [orderCancelNote, setOrderCancelNote] = useState('');
@@ -25,13 +26,15 @@ const OperatorOrderOnTheWay = () => {
   const dispatch = useAppDispatch();
   const [orderList, setOrderList] = useState([] as Array<KeyValue>);
 
+  const reasonList = [
+    { name: 'Spam' },
+    { name: 'Parcel is not meets the description' },
+  ];
+
   function getOrders() {
     const getStationNewOrder = dispatch(
       getOrderByStatus({
-        status: [
-          ORDER_STATUS.WAITING_CUSTOMER_BRING_TO_STATION,
-          ORDER_STATUS.COLLECTOR_ON_THE_WAY_TO_STATION,
-        ].join(','),
+        status: [ORDER_STATUS.ORDER_CREATED].join(','),
       }),
     ).unwrap();
     getStationNewOrder.then(async (res) => {
@@ -39,14 +42,14 @@ const OperatorOrderOnTheWay = () => {
         const orders = res.data.orders;
         for (let j = 0; j < orders.length; j++) {
           let i = 0;
-          for (const _ in orders[j].parcels) {
+          for (const _ in orders[j].order.parcels) {
             const getPhoto = await dispatch(
-              getPhotoInfo({ id: orders[j].parcels[i].photo.id }),
+              getPhotoInfo({ id: orders[j].order.parcels[i].photo.id }),
             ).unwrap();
 
             const url = URL.createObjectURL(getPhoto.data);
-            orders[j].parcels[i].photo = {
-              ...orders[j].parcels[i].photo,
+            orders[j].order.parcels[i].photo = {
+              ...orders[j].order.parcels[i].photo,
               url,
             };
             i++;
@@ -89,6 +92,11 @@ const OperatorOrderOnTheWay = () => {
     return parcelWeightList[weight].name;
   };
 
+  function prepareShowCancelOrder(order: KeyValue) {
+    setOrderCancelInfo(order);
+    setIsShowCancelDialog(true);
+  }
+
   const footerCancelDialog = (
     <div>
       <Button
@@ -109,7 +117,7 @@ const OperatorOrderOnTheWay = () => {
 
   return (
     <>
-      {orderList.map((order, index) => (
+      {orderList.map((item, index) => (
         <div
           key={index}
           className="bg-gray-50 border-stone-200 border-solid border rounded p-4 mb-4"
@@ -118,16 +126,24 @@ const OperatorOrderOnTheWay = () => {
             <p className="font-semibold text-gray-600">
               Tracking ID:{' '}
               <span className="text-xl font-semibold text-black">
-                {order.uniqueTrackingId}
+                {item.order.uniqueTrackingId}
               </span>
             </p>
             <div className="flex justify-between gap-4 items-center">
               <Button
-                onClick={() => confirmOrderOK(order)}
+                onClick={() => confirmOrderOK(item.order)}
                 size="small"
-                label="Confirm Arrived"
+                label="Confirm OK"
                 rounded
                 icon="pi pi-check"
+              />
+              <Button
+                onClick={() => prepareShowCancelOrder(item.order)}
+                size="small"
+                severity="danger"
+                rounded
+                label="Cancel"
+                icon="fa fa-xmark"
               />
             </div>
           </div>
@@ -135,47 +151,47 @@ const OperatorOrderOnTheWay = () => {
           <div className="grid grid-cols-12 gap-8 mt-4">
             <div className="col-span-3">
               <p className="text-gray-600 text-sm">Sender</p>
-              <p className="mb-1 mt-3">{order.senderName}</p>
-              <p className="mb-1">{order.senderEmail}</p>
-              <p className="mb-1">{order.senderPhone}</p>
-              <p>{`${order.pickupAddress.building} ${order.pickupAddress.detail} ${order.pickupAddress.street.name}, 
-        ${order.pickupAddress.ward.name}, ${order.pickupAddress.district.name}, ${order.pickupAddress.city.name}`}</p>
+              <p className="mb-1 mt-3">{item.order.senderName}</p>
+              <p className="mb-1">{item.order.senderEmail}</p>
+              <p className="mb-1">{item.order.senderPhone}</p>
+              <p>{getFullAddressText(item.order.pickupAddress)}</p>
             </div>
             <div className="col-span-3">
-              <p className="text-gray-600 text-sm">Recipinient</p>
-              <p className="mb-1 mt-3">{order.receiverName}</p>
-              <p className="mb-1">{order.receiverEmail}</p>
-              <p className="mb-1">{order.receiverPhone}</p>
-              <p>{`${order.dropOffAddress.building} ${order.dropOffAddress.detail} ${order.dropOffAddress.street.name}, 
-        ${order.dropOffAddress.ward.name}, ${order.dropOffAddress.district.name}, ${order.dropOffAddress.city.name}`}</p>
+              <p className="text-gray-600 text-sm">Recipient</p>
+              <p className="mb-1 mt-3">{item.order.receiverName}</p>
+              <p className="mb-1">{item.order.receiverEmail}</p>
+              <p className="mb-1">{item.order.receiverPhone}</p>
+              <p>{getFullAddressText(item.order.dropOffAddress)}</p>
             </div>
             <div className="col-span-6">
               <p className="text-gray-600 text-sm">Parcels</p>
               <div className="grid grid-cols-3 gap-8 mt-3">
-                {order.parcels.map((parcel: KeyValue, indexParcel: number) => (
-                  <div
-                    key={indexParcel}
-                    className="flex-col gap-4 items-center"
-                  >
-                    <div>
-                      <p>{parcel.description}</p>
-                      <p>{getWeightText(parcel.weight)}</p>
+                {item.order.parcels.map(
+                  (parcel: KeyValue, indexParcel: number) => (
+                    <div
+                      key={indexParcel}
+                      className="flex-col gap-4 items-center"
+                    >
+                      <div>
+                        <p>{parcel.description}</p>
+                        <p>{getWeightText(parcel.weight)}</p>
+                      </div>
+                      <Image
+                        className="mt-2 mr-2"
+                        src={parcel.photo.url}
+                        width="100%"
+                        preview
+                      />
                     </div>
-                    <Image
-                      className="mt-2 mr-2"
-                      src={parcel.photo.url}
-                      width="100%"
-                      preview
-                    />
-                  </div>
-                ))}
+                  ),
+                )}
               </div>
             </div>
           </div>
           <Divider />
           <p className="mt-4 text-sm">
             Created at:{' '}
-            {moment(new Date(order.createdAt)).format('DD/MM/YYYY HH:mm')}
+            {moment(new Date(item.order.createdAt)).format('DD/MM/YYYY HH:mm')}
           </p>
         </div>
       ))}
@@ -187,10 +203,23 @@ const OperatorOrderOnTheWay = () => {
         onHide={() => closeCancelDialog()}
         footer={footerCancelDialog}
       >
-        fasdf
+        <Dropdown
+          value={orderCancelNote}
+          onChange={(e) => setOrderCancelNote(e.value.name)}
+          options={reasonList}
+          optionLabel="name"
+          placeholder="Select a reason or type in below"
+          className="w-full md:w-14rem mb-4"
+        />
+        <InputText
+          value={orderCancelNote}
+          className="w-full"
+          onChange={(e) => setOrderCancelNote(e.target.value)}
+          placeholder="Reason to cancel"
+        />
       </Dialog>
     </>
   );
 };
 
-export default OperatorOrderOnTheWay;
+export default OperatorOrderNewlyCreate;

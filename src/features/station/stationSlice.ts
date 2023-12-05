@@ -7,6 +7,7 @@ import {
   deleteStationById,
   getChildStationAPI,
   getStationWithSameTypeAPI,
+  getConnectedStationAPI,
 } from './stationAPI';
 import { KeyValue } from '../../common/config/interfaces';
 import { AppState } from '../../store';
@@ -37,6 +38,13 @@ export const getChildStation = createAsyncThunk(
   'station/getChildStation',
   async (data: KeyValue) => {
     return await getChildStationAPI(data);
+  },
+);
+
+export const getConnectedStation = createAsyncThunk(
+  'station/getConnectedStation',
+  async (data: KeyValue) => {
+    return await getConnectedStationAPI(data);
   },
 );
 
@@ -110,6 +118,13 @@ export const StationSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(getStationWithSameType.fulfilled, (state, action) => {
+        state.status = 'idle';
+      });
+    builder
+      .addCase(getConnectedStation.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getConnectedStation.fulfilled, (state, action) => {
         state.status = 'idle';
       });
   },

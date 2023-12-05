@@ -40,3 +40,17 @@ export const confirmOrderOperatorAPI = async (data: KeyValue) => {
   );
   return response;
 };
+
+export const confirmOrderArrivedAPI = async (data: KeyValue) => {
+  const response = await useAPI(
+    {
+      url: `orders/orderArrivedStation/${data.id}`,
+      method: 'PATCH',
+      header: {
+        'Content-Type': 'application/json',
+      },
+    },
+    true,
+  );
+  return response;
+};

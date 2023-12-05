@@ -5,6 +5,7 @@ import {
   cancelOrderOperatorAPI,
   getNewOrderByStatusAPI,
   confirmOrderOperatorAPI,
+  confirmOrderArrivedAPI,
 } from './orderAPI';
 
 export interface OrderState {
@@ -36,6 +37,13 @@ export const confirmOrderOperator = createAsyncThunk(
   },
 );
 
+export const confirmOrderArrivedAction = createAsyncThunk(
+  'order/confirmOrderArrivedAction',
+  async (data: KeyValue) => {
+    return await confirmOrderArrivedAPI(data);
+  },
+);
+
 export const OrderSlice = createSlice({
   name: 'order',
   initialState,
@@ -62,6 +70,13 @@ export const OrderSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(confirmOrderOperator.fulfilled, (state) => {
+        state.status = 'idle';
+      });
+    builder
+      .addCase(confirmOrderArrivedAction.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(confirmOrderArrivedAction.fulfilled, (state) => {
         state.status = 'idle';
       });
   },
