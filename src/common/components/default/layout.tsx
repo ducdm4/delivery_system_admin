@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/router';
 import { getUserProfilePicture } from '../../../features/photo/photoSlice';
 import Head from 'next/head';
+import ChatDialog from '../chat/ChatDialog';
 
 export default function Layout({ children }: PropsWithChildren) {
   const userInfo = useAppSelector(userLoggedIn);
@@ -82,6 +83,8 @@ export default function Layout({ children }: PropsWithChildren) {
             {isVerified && children}
           </div>
         </div>
+
+        {userInfo.id && <ChatDialog />}
       </main>
     </>
   );

@@ -243,10 +243,12 @@ const OperatorOrderOnTheWay = () => {
         >
           <div className="flex justify-between items-center">
             <p className="font-semibold text-xl">DELIVERY SYSTEM</p>
-            <Barcode
-              {...barcodeProps}
-              value={orderArrivedInfo.uniqueTrackingId}
-            />
+            {orderArrivedInfo.uniqueTrackingId !== '' && (
+              <Barcode
+                {...barcodeProps}
+                value={orderArrivedInfo.uniqueTrackingId || ''}
+              />
+            )}
           </div>
           <div className="h-[80%] grid grid-cols-2 border-t py-3 mt-2">
             <div className="border-r h-full flex flex-col justify-center pr-2">

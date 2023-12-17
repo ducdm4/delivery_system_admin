@@ -38,24 +38,28 @@ const OperatorOrderNewlyCreate = () => {
       }),
     ).unwrap();
     getStationNewOrder.then(async (res) => {
-      if (res.data) {
-        const orders = res.data.orders;
-        for (let j = 0; j < orders.length; j++) {
-          let i = 0;
-          for (const _ in orders[j].order.parcels) {
-            const getPhoto = await dispatch(
-              getPhotoInfo({ id: orders[j].order.parcels[i].photo.id }),
-            ).unwrap();
+      if (res.isSuccess) {
+        if (res.data.orders.length) {
+          const orders = res.data.orders;
+          for (let j = 0; j < orders.length; j++) {
+            let i = 0;
+            for (const _ in orders[j].order.parcels) {
+              const getPhoto = await dispatch(
+                getPhotoInfo({ id: orders[j].order.parcels[i].photo.id }),
+              ).unwrap();
 
-            const url = URL.createObjectURL(getPhoto.data);
-            orders[j].order.parcels[i].photo = {
-              ...orders[j].order.parcels[i].photo,
-              url,
-            };
-            i++;
+              const url = URL.createObjectURL(getPhoto.data);
+              orders[j].order.parcels[i].photo = {
+                ...orders[j].order.parcels[i].photo,
+                url,
+              };
+              i++;
+            }
           }
+          setOrderList(orders);
+        } else {
+          setOrderList([]);
         }
-        setOrderList(orders);
       }
     });
   }

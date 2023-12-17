@@ -28,3 +28,9 @@ export interface FailedResponse {
 export interface TableListRefObject {
   handleSearch: () => void;
 }
+
+export interface ChatItem {
+  roomName: string;
+  from: string;
+  messageList: KeyValue[];
+}
