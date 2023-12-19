@@ -2,17 +2,17 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Dropdown } from 'primereact/dropdown';
-import React, { useState } from 'react';
+import React from 'react';
 import { KeyValue } from '../../../config/interfaces';
 
 interface Props {
   keyword: string;
   tableFilter: Array<{ key: string; label: string; data: Array<KeyValue> }>;
   filterData: Array<filterItem>;
-  setKeyword: Function;
-  handleReset: Function;
-  handleSubmitSearch: Function;
-  handleChangeFilter: Function;
+  setKeyword: any;
+  handleReset: any;
+  handleSubmitSearch: any;
+  handleChangeFilter: any;
   loadingStatus: string;
 }
 

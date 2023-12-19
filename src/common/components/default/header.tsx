@@ -1,13 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Menubar } from 'primereact/menubar';
 import { useRouter } from 'next/router';
 import { Avatar } from 'primereact/avatar';
 import { useAppSelector } from '../../hooks';
 import { logout, userLoggedIn } from '../../../features/auth/authSlice';
 import { profileImageState } from '../../../features/photo/photoSlice';
-import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
-import { OverlayPanel } from 'primereact/overlaypanel';
 import { useDispatch } from 'react-redux';
 import { ROLE_LIST } from '../../config/constant';
 
@@ -178,12 +176,6 @@ export default function Header() {
 
   const end = (
     <div className={'flex items-center '}>
-      <i
-        className="pi pi-bell p-overlay-badge mr-6"
-        style={{ fontSize: '1.5rem' }}
-      >
-        <Badge value="2"></Badge>
-      </i>
       <Avatar className={'lg:!w-[3.5rem] lg:!h-[3.5rem]'} shape="circle">
         {userProfileImage && (
           <img className={'object-cover'} src={userProfileImage} />

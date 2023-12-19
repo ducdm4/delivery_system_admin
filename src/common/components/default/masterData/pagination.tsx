@@ -8,7 +8,7 @@ interface Props {
     total: number;
   };
   loadingStatus: string;
-  handleChangePage: Function;
+  handleChangePage: any;
 }
 
 const BasicTablePagination = ({

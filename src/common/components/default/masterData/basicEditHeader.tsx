@@ -17,8 +17,8 @@ interface Props {
     big: string;
     small: string;
   };
-  handleSubmit: Function;
-  resetInput: Function;
+  handleSubmit: any;
+  resetInput: any;
   url: string;
   loading?: string;
 }

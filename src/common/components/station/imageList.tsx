@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 
 interface Props {
   inputs: KeyValue;
-  setInputs: Function;
+  setInputs: any;
 }
 
 function StationImageList({ inputs, setInputs }: Props) {

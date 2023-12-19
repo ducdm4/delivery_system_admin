@@ -37,7 +37,7 @@ const OperatorOrderNewlyCreate = () => {
         status: [ORDER_STATUS.ORDER_CREATED].join(','),
       }),
     ).unwrap();
-    getStationNewOrder.then(async (res) => {
+    getStationNewOrder.then(async (res: KeyValue) => {
       if (res.isSuccess) {
         if (res.data.orders.length) {
           const orders = res.data.orders;

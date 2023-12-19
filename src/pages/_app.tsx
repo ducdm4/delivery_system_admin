@@ -12,6 +12,7 @@ import Layout from '../common/components/default/layout';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import { useEffect } from 'react';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

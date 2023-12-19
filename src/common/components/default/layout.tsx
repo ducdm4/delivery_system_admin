@@ -12,8 +12,8 @@ import {
 } from '../../../features/auth/authSlice';
 import { useRouter } from 'next/router';
 import { getUserProfilePicture } from '../../../features/photo/photoSlice';
-import Head from 'next/head';
 import ChatDialog from '../chat/ChatDialog';
+import { KeyValue } from '../../config/interfaces';
 
 export default function Layout({ children }: PropsWithChildren) {
   const userInfo = useAppSelector(userLoggedIn);
@@ -31,7 +31,7 @@ export default function Layout({ children }: PropsWithChildren) {
       if (router.pathname.split('/').indexOf('login') === -1) {
         if (token) {
           const verify = dispatch(verifyUserLogin()).unwrap();
-          verify.then((res) => {
+          verify.then((res: KeyValue) => {
             if (res.isSuccess) {
               setIsVerified(true);
               if (res.data.profilePicture) {

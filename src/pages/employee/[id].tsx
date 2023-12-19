@@ -352,7 +352,6 @@ const DetailEmployee: NextPage = () => {
     ) : (
       <EmployeeInfo
         inputs={inputs}
-        handleChange={handleChange}
         setInputs={setInputs}
         stationList={stationList}
         errors={inputErrors}

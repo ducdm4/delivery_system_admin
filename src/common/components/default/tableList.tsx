@@ -17,8 +17,8 @@ interface Props {
     url: string;
     filters: Array<{ key: string; label: string; data: Array<KeyValue> }>;
   };
-  rowList: Function;
-  getData: Function;
+  rowList: any;
+  getData: any;
   loadingStatus: string;
 }
 
@@ -152,7 +152,7 @@ const TableList = forwardRef(
       });
       const res = await getData(query);
       setTableData(res.list);
-      setPagingInfo((oldState) => {
+      setPagingInfo(() => {
         return {
           currentPage: res.page,
           totalPage: Math.ceil(res.total / PER_PAGE_ITEM),

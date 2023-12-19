@@ -9,8 +9,8 @@ import { KeyValue } from '../../config/interfaces';
 interface Props {
   inputs: KeyValue;
   inputsError?: KeyValue;
-  handleChange: Function;
-  setInputByValue: Function;
+  handleChange: any;
+  setInputByValue: any;
 }
 
 const ProfileBasicInfo = ({

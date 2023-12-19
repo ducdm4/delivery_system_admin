@@ -1,7 +1,5 @@
-import { NextPage } from 'next';
-import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent } from 'react';
 import { KeyValue } from '../../config/interfaces';
 import { employeeRoleList } from '../../config/constant';
 import { Checkbox, CheckboxChangeEvent } from 'primereact/checkbox';
@@ -11,18 +9,11 @@ import { Message } from 'primereact/message';
 interface Props {
   inputs: KeyValue;
   errors: KeyValue;
-  setInputs: Function;
-  handleChange: Function;
+  setInputs: any;
   stationList: Array<KeyValue>;
 }
 
-const EmployeeInfo = ({
-  inputs,
-  handleChange,
-  setInputs,
-  stationList,
-  errors,
-}: Props) => {
+const EmployeeInfo = ({ inputs, setInputs, stationList, errors }: Props) => {
   function onVerifiedChange(e: CheckboxChangeEvent, key: string) {
     setInputByValue(key, e.checked, setInputs);
   }

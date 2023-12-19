@@ -1,5 +1,3 @@
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
 import { useEffect, useState } from 'react';
 import { KeyValue, ChatItem } from '../../config/interfaces';
 import { socket } from '../../config/socket';

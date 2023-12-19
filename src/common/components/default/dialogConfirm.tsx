@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 
 interface Props {
@@ -25,12 +25,12 @@ const DialogConfirm: NextPage<Props> = ({
         icon: 'pi pi-exclamation-triangle',
         accept: acceptedCallback,
         reject: refusedCallback,
-        onHide: (e) => onHid(e),
+        onHide: () => onHid(),
       });
     }
   }, [isShow]);
 
-  function onHid(res: string) {
+  function onHid() {
     refusedCallback();
   }
 

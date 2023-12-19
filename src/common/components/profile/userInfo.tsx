@@ -14,7 +14,7 @@ import {
 interface Props {
   inputs: KeyValue;
   inputsError: object;
-  setInputs: Function;
+  setInputs: any;
   isShowProfilePicture: boolean;
 }
 

@@ -7,7 +7,7 @@ interface keyStringValue {
 interface Props {
   inputs: keyStringValue;
   inputsError: keyStringValue;
-  setInputByValue: Function;
+  setInputByValue: any;
 }
 
 const ProfileImageInfo = ({ inputs, inputsError, setInputByValue }: Props) => {

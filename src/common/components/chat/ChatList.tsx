@@ -1,4 +1,4 @@
-import { ChatItem, KeyValue } from '../../config/interfaces';
+import { ChatItem } from '../../config/interfaces';
 
 interface Props {
   chatList: ChatItem[];

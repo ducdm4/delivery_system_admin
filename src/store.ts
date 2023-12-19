@@ -11,7 +11,7 @@ import streetReducer from './features/street/streetSlice';
 import stationReducer from './features/station/stationSlice';
 import employeeReducer from './features/employee/employeeSlice';
 import routeReducer from './features/route/routeSlice';
-import orderReducer from './features/order/orderSlice'
+import orderReducer from './features/order/orderSlice';
 
 export function makeStore() {
   return configureStore({
@@ -27,7 +27,7 @@ export function makeStore() {
       station: stationReducer,
       employee: employeeReducer,
       route: routeReducer,
-      order: orderReducer
+      order: orderReducer,
     },
   });
 }
