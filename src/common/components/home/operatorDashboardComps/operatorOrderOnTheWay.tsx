@@ -242,7 +242,7 @@ const OperatorOrderOnTheWay = () => {
           id="order-label-container"
         >
           <div className="flex justify-between items-center">
-            <p className="font-semibold text-xl">DELIVERY SYSTEM</p>
+            <div className="font-semibold text-xl">DELIVERY SYSTEM</div>
             {orderArrivedInfo.uniqueTrackingId !== '' && (
               <Barcode
                 {...barcodeProps}
@@ -273,12 +273,14 @@ const OperatorOrderOnTheWay = () => {
             <div className="pl-3 flex flex-col justify-between">
               <div>
                 <p className="text-xs">Parcels:</p>
-                {orderArrivedInfo.parcels?.map((parcel: KeyValue) => (
-                  <div className="font-semibold">
-                    <span className="mr-1">1:</span>
-                    <span>{parcel.description}</span>
-                  </div>
-                ))}
+                {orderArrivedInfo.parcels?.map(
+                  (parcel: KeyValue, index: number) => (
+                    <div className="font-semibold" key={index}>
+                      <span className="mr-1">1:</span>
+                      <span>{parcel.description}</span>
+                    </div>
+                  ),
+                )}
               </div>
               <div className="border-t pt-2 font-semibold">
                 <div className="flex items-center justify-between ">

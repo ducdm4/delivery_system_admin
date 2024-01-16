@@ -30,6 +30,7 @@ const ChatDialog = () => {
     });
 
     socket.on('newMessageReceived', (data: KeyValue) => {
+      console.log('newMessageReceived', data);
       if (data.from !== currentUserName()) {
         updateMessageList({
           fromSelf: false,
@@ -136,10 +137,9 @@ const ChatDialog = () => {
         {!isShowFullWindow && (
           <div
             onClick={() => setIsShowFullWindow(true)}
-            className="cursor-pointer flex items-center justify-center bg-blue-400 rounded-lg p-4 text-white"
+            className="cursor-pointer flex items-center justify-center bg-green-500 rounded-lg p-4 text-white"
           >
             <i className="pi pi-comment mr-2 !text-4xl"></i>
-            <span>Current chat</span>
           </div>
         )}
         {isShowFullWindow && (

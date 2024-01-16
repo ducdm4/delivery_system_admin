@@ -59,6 +59,12 @@ const OperatorOrderNewlyCreate = () => {
           setOrderList(orders);
         } else {
           setOrderList([]);
+          toast('No new order at the moment, try again later!', {
+            hideProgressBar: true,
+            autoClose: 0,
+            type: 'success',
+            theme: 'colored',
+          });
         }
       }
     });
@@ -199,7 +205,16 @@ const OperatorOrderNewlyCreate = () => {
           </p>
         </div>
       ))}
-      {!orderList.length && <p>There is no new order, try again later!</p>}
+      {!orderList.length && (
+        <div className="flex justify-between items-center">
+          <span className="font-semibold text-lg">
+            There is no new order, try again later!
+          </span>
+          <Button onClick={() => getOrders()} severity="success">
+            Get New
+          </Button>
+        </div>
+      )}
       <Dialog
         header={orderCancelInfo.uniqueTrackingId}
         visible={isShowCancelDialog}

@@ -27,6 +27,7 @@ const ChatBox = ({
         message: currentMessage,
         from: currentUserName,
         roomName: currentChatInfo.roomName,
+        instanceId: socket.id,
       },
       (res: boolean) => {
         if (res) {

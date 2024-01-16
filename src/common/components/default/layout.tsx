@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { getUserProfilePicture } from '../../../features/photo/photoSlice';
 import ChatDialog from '../chat/ChatDialog';
 import { KeyValue } from '../../config/interfaces';
+import { toast } from 'react-toastify';
 
 export default function Layout({ children }: PropsWithChildren) {
   const userInfo = useAppSelector(userLoggedIn);
